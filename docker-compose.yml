@@ -11,3 +11,22 @@ services:
       - HTTPMOCK_PORT=4000
     volumes:
       - ./Portability.zip:/data/Portability.zip
+    networks:
+      - data_portability_network
+
+  data_portability_api_mocker:
+    build: .
+    environment:
+      # Not automatically set when running in the container
+      # Set it to make sure the method of body_from_file does not fail
+      - "CARGO_MANIFEST_DIR=."
+    volumes:
+      - ./configuration:/app/configuration
+      - ./data:/app/data
+    depends_on:
+      - httpmock
+    networks:
+      - data_portability_network
+
+networks:
+  data_portability_network:

@@ -128,7 +128,7 @@ impl GoogleMockAuthServer {
                 when.method(GET).path("/download_endpoint/some_download_id");
                 then.status(200)
                     .header("Content-Type", "application/zip")
-                    .body_from_file("Portability.zip")
+                    .body_from_file("data/Portability.zip")
                     .delay(Duration::from_secs(0));
             })
             .await;
@@ -169,4 +169,7 @@ async fn main() {
     server.mock_download_archive().await;
 
     server.mock_revoke_token().await;
+
+    // to keep the container running uncomment the line below
+    // tokio::signal::ctrl_c().await.unwrap();
 }

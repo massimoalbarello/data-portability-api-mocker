@@ -1,5 +1,5 @@
 [package]
-name = "standalone_api_mocker"
+name = "data_portability_api_mocker"
 version = "0.1.0"
 edition = "2021"
 
