@@ -1,0 +1,13 @@
+services:
+  httpmock:
+    image: alexliesenfeld/httpmock
+    ports:
+      - "4000:4000"
+    environment:
+      # If set to 1, the mock server will be configured to accept external connections (binds to 0.0.0.0).
+      # Otherwise, only connections from your local machine will be accepted.
+      - HTTPMOCK_EXPOSE=1
+      # make sure the port is in sync with the ones specified in load.yml
+      - HTTPMOCK_PORT=4000
+    volumes:
+      - ./Portability.zip:/data/Portability.zip

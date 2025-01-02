@@ -1,0 +1,45 @@
+server:
+  # 0.0.0.0 or 127.0.0.1 does not work: https://github.com/seanmonstar/reqwest/issues/1328#issue-989122485
+  host: "localhost"
+  port: 8080
+  refresher_poll_interval_millis: 1000
+  refresher_refresh_interval_secs: 999999
+
+worker:
+  polling_interval_millis: 10000
+
+aws:
+  region: "eu-central-1"
+  bucket_name: "fabric-data-portability-test"
+  # port must be set to the one specified in docker-compose for motoserver
+  test_s3_endpoint_url: "http://127.0.0.1:3000"
+
+google:
+  client_id: "test_google_client_id"
+  client_secret: "test_google_client_secret"
+  # URI of the frontend callback component triggered by Google after the OAuth flow terminates
+  redirect_uri: "http://localhost:8080/callback"
+  # specify the endpoints of the standalone mocker
+  # make sure the port is in sync with the port specified in HTTPMOCK_PORT of docker-compose.yml
+  access_token_uri: "http://0.0.0.0:4000/token"
+  archive_base_uri: "http://0.0.0.0:4000"
+  reset_authorization_uri: "http://0.0.0.0:4000/reset"
+
+tiktok:
+  client_key: "test_tiktok_client_key"
+  client_secret: "test_tiktok_client_secret"
+  redirect_uri: "http://localhost:8080/callback"
+
+linkedin:
+  client_id: "test_linkedin_client_key"
+  client_secret: "test_linkedin_client_secret"
+  redirect_uri: "http://localhost:8080/callback"
+
+pinterest:
+  app_id: "test_pinterest_app_id"
+  app_secret_key: "test_pinterest_app_secret_key"
+  redirect_uri: "http://localhost:8080/callback"
+
+sentry:
+  dsn:
+  environment: "load"

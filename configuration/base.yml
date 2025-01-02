@@ -1,0 +1,59 @@
+worker:
+  request_timeout_millis: 10000
+  # number of retries before a task is considered failed
+  max_tries: 5
+  loop_interval_millis: 1000
+  max_polling_iterations: 100
+
+google:
+  auth_uri: "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount"
+  # endpoint called by the backend to convert an authorization code into an access token
+  access_token_uri: "https://oauth2.googleapis.com/token"
+  # base uri called by the backend to initiate and read the state of an archive job for a resource
+  archive_base_uri: "https://dataportability.googleapis.com/v1"
+  # endpoint called by the backend to initiate an archive job for a resource
+  initiate_archive_endpoint: "/portabilityArchive:initiate"
+  archive_jobs_path: "/archiveJobs/"
+  # endpoint called by the backend to read the state of an archive job for a resource
+  poll_archive_state_endpoint: "/portabilityArchiveState"
+  # uri called by the backend to reset the authorization of a user
+  reset_authorization_uri: "https://dataportability.googleapis.com/v1/authorization:reset"
+
+tiktok:
+  auth_uri: "https://www.tiktok.com/v2/auth/authorize"
+  access_token_uri: "https://open.tiktokapis.com/v2/oauth/token/"
+  revocation_uri: "https://open.tiktokapis.com/v2/oauth/revoke/"
+  data_base_uri: "https://open.tiktokapis.com/v2/user/data"
+  add_data_endpoint: "/add/"
+  check_status_endpoint: "/check/"
+  download_data_endpoint: "/download/"
+
+linkedin:
+  auth_uri: "https://www.linkedin.com/oauth/v2/authorization"
+  access_token_uri: "https://www.linkedin.com/oauth/v2/accessToken"
+  revocation_uri: "https://www.linkedin.com/oauth/v2/revoke"
+  query_snapshot_uri: "https://api.linkedin.com/rest/memberSnapshotData"
+  query_changelog_uri: "https://api.linkedin.com/rest/memberChangeLogs"
+  api_version: "202312"
+  # specifies the number of Changelog elements to be returned in the page. Setting count to a value above 50 will return 400
+  changelog_pagination_size: 50
+  
+
+pinterest:
+  auth_uri: "https://www.pinterest.com/oauth"
+  access_token_uri: "https://api.pinterest.com/v5/oauth/token"
+  # pinterest does not provide a revocation endpoint
+  # provide a dummy url and implement a custom revoke token method instead of the default one provided by oauth2
+  revocation_uri: "https://pinterest.com/does_not_provide_a_revocation_endpoint"
+  resource_base_uri: "https://api.pinterest.com/v5/"
+
+postgres:
+  username: "postgres"
+  password: "password"
+  host: "localhost"
+  port: 5432
+  database_name: "fabric_test"
+  max_connections: 100
+
+sentry:
+  dsn:

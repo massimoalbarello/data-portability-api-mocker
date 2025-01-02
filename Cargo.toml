@@ -1,0 +1,21 @@
+[package]
+name = "standalone_api_mocker"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+httpmock = { version = "0.7.0", features = ["standalone"] }
+oauth2 = "4.4.2"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+config = "0.14.0"
+secrecy = { version = "0.8.0", features = ["serde"] }
+sqlx = { version = "0.8", features = [
+    "runtime-tokio",
+    "tls-rustls",
+    "postgres",
+    "uuid",
+    "macros",
+    "chrono",
+] }
