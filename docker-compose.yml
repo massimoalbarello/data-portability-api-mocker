@@ -14,6 +14,15 @@ services:
     networks:
       - data_portability_network
 
+  motoserver:
+    image: motoserver/moto:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - MOTO_PORT=3000
+    networks:
+      - data_portability_network
+
   data_portability_api_mocker:
     build: .
     environment:
