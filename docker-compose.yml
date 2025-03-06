@@ -10,16 +10,7 @@ services:
       # make sure the port is in sync with the ones specified in load.yml
       - HTTPMOCK_PORT=4000
     volumes:
-      - ./Portability.zip:/data/Portability.zip
-    networks:
-      - data_portability_network
-
-  motoserver:
-    image: motoserver/moto:latest
-    ports:
-      - "3000:3000"
-    environment:
-      - MOTO_PORT=3000
+      - ./data/Portability.zip:/data/Portability.zip
     networks:
       - data_portability_network
 

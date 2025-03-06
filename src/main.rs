@@ -28,6 +28,9 @@ impl GoogleMockAuthServer {
                 .archive_base_uri
                 .split("http://")
                 .last()
+                .unwrap()
+                .split("/v1")
+                .next()
                 .unwrap(),
         )
         .await;
@@ -100,7 +103,7 @@ impl GoogleMockAuthServer {
         self.server
             .mock_async(|when, then| {
                 when.method(POST)
-                    .path(&self.backend_settings.google.initiate_archive_endpoint);
+                    .path_contains(&self.backend_settings.google.initiate_archive_endpoint);
                 then.status(200)
                     .json_body(serde_json::to_value(&mock_response_payload).unwrap());
             })
@@ -109,17 +112,17 @@ impl GoogleMockAuthServer {
 
     pub async fn mock_get_archive_status(&self) {
         self.server
-        .mock_async(|when, then| {
-            when.method(GET)
-                .path_contains(&self.backend_settings.google.archive_jobs_path);
-            then.status(200)
+            .mock_async(|when, then| {
+                when.method(GET)
+                    .path_contains(&self.backend_settings.google.archive_jobs_path);
+                then.status(200)
                 .json_body(json!({
                     "state": "COMPLETED",
                     "urls": vec![format!("http://{}/download_endpoint/some_download_id", self.address().to_string())]
                 }))
-                .delay(Duration::from_secs(0));
-        })
-        .await;
+                .delay(Duration::from_secs(3));
+            })
+            .await;
     }
 
     pub async fn mock_download_archive(&self) {
@@ -137,15 +140,13 @@ impl GoogleMockAuthServer {
     pub async fn mock_revoke_token(&self) {
         self.server
             .mock_async(|when, then| {
-                when.method(POST).path(
-                    "/".to_string()
-                        + self
-                            .backend_settings
-                            .google
-                            .reset_authorization_uri
-                            .split('/')
-                            .last()
-                            .unwrap(),
+                when.method(POST).path_contains(
+                    self.backend_settings
+                        .google
+                        .reset_authorization_uri
+                        .split("/v1")
+                        .last()
+                        .unwrap(),
                 );
                 then.status(200);
             })
@@ -169,7 +170,4 @@ async fn main() {
     server.mock_download_archive().await;
 
     server.mock_revoke_token().await;
-
-    // to keep the container running uncomment the line below
-    // tokio::signal::ctrl_c().await.unwrap();
 }

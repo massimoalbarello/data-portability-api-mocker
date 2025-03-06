@@ -21,9 +21,9 @@ google:
   redirect_uri: "http://localhost:8080/callback"
   # specify the endpoints of the standalone mocker
   # make sure the port is in sync with the port specified in HTTPMOCK_PORT of docker-compose.yml
-  access_token_uri: "http://httpmock:4000/token"
-  archive_base_uri: "http://httpmock:4000"
-  reset_authorization_uri: "http://httpmock:4000/reset"
+  access_token_uri: "http://0.0.0.0:4000/token"
+  archive_base_uri: "http://0.0.0.0:4000/v1"
+  reset_authorization_uri: "http://0.0.0.0:4000/v1/authorization:reset"
 
 tiktok:
   client_key: "test_tiktok_client_key"
